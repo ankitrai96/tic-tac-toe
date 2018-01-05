@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
-const Cell = () => {
+const Cell = ({token, boardTap, cellIdentity}) => {
     return (
         <View style={styles.wrapper}>
-            <TouchableOpacity onPress={()=>alert("gotcha!")}>
+            <TouchableOpacity onPress={()=>boardTap(cellIdentity)}>
                 <View style={styles.placeholder}>
-                    <Text style={styles.text}>X</Text>
+                    <Text style={styles.text}>{token}</Text>
                 </View>
             </TouchableOpacity>
         </View>
