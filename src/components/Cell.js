@@ -1,33 +1,48 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Image, TouchableOpacity} from 'react-native';
 
 const Cell = ({token, boardTap, cellIdentity}) => {
+    fillImage = ()=> {
+        if(token=='O'){
+            return (
+                <Image 
+                    source={require('../../assets/poop.png')}
+                    style = {styles.visual}
+                />
+            )
+        } else if(token=='X') {
+            return (
+                <Image 
+                    source={require('../../assets/ghost.png')}
+                    style = {styles.visual}
+                />
+            )
+        }
+    }
     return (
         <View style={styles.wrapper}>
             <TouchableOpacity onPress={()=>boardTap(cellIdentity)}>
-                <View style={styles.placeholder}>
-                    <Text style={styles.text}>{token}</Text>
-                </View>
+                <View style={styles.placeholder}>{fillImage()}</View>
             </TouchableOpacity>
         </View>
     )
 }
 const styles = {
     wrapper: {
-        backgroundColor : '#FFE381',
+        backgroundColor : '#b8b42d',
         alignItems : 'center',
         justifyContent: 'center',
         flex:1
     },
-    text: {
-        fontWeight: 'bold',
-        fontSize: 28
+    visual: {
+        height: 38,
+        width: 38
     },
     placeholder: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 30,
-        width: 30
+        height: 40,
+        width: 40
     }
 }
 export default Cell;

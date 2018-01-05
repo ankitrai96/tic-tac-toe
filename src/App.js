@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Text} from 'react-native';
+import {View, StatusBar} from 'react-native';
 import Banner from './components/Banner';
 import GameGrid from './components/GameGrid';
 
@@ -7,9 +7,10 @@ export default class App extends Component {
   render(){
     return (
       <View style={styles.deck}>
+        <StatusBar backgroundColor="#697a21"/>
         <Banner>Tic Tac Toe</Banner>
         <GameGrid/>
-        <Banner>Beat me if you can</Banner>
+        <View/> 
       </View>
     );
   }
@@ -18,7 +19,7 @@ export default class App extends Component {
 const styles = {
   deck : {
     flex : 1,
-    backgroundColor : '#FFE381',
+    backgroundColor : '#b8b42d',
     alignItems : 'center',
     justifyContent: 'space-between'
   }
