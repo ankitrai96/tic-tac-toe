@@ -41,8 +41,8 @@ const styles = {
     placeholder: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 55,
-        width: 55
+        height: 65,
+        width: 65
     }
 }
 export default Cell;

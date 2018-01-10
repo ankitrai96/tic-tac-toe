@@ -53,6 +53,7 @@ export default class GameGrid extends Component {
             this.setState({cellValue: ['','','','','','','','',''], winner:''})
         }, 3000);
     }
+    //To-Do: Shrinkify the gameOver if-else ladder
     gameOver(forToken) {
         if(this.state.cellValue[0]==forToken && this.state.cellValue[1]==forToken && this.state.cellValue[2]==forToken){
             this.gameWon(forToken)
