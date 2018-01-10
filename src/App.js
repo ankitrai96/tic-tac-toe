@@ -8,7 +8,7 @@ export default class App extends Component {
     return (
       <View style={styles.deck}>
         <StatusBar backgroundColor="#697a21"/>
-        <Banner>Tic Tac Toe</Banner>
+        <Banner>Pic Pac Poe</Banner>
         <GameGrid/>
         <View/> 
       </View>

@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "TTT^2-tvOS.app"
-               BlueprintName = "TTT^2-tvOS"
-               ReferencedContainer = "container:TTT^2.xcodeproj">
+               BuildableName = "PicPacPoe-tvOS.app"
+               BlueprintName = "PicPacPoe-tvOS"
+               ReferencedContainer = "container:PicPacPoe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "TTT^2-tvOSTests.xctest"
-               BlueprintName = "TTT^2-tvOSTests"
-               ReferencedContainer = "container:TTT^2.xcodeproj">
+               BuildableName = "PicPacPoe-tvOSTests.xctest"
+               BlueprintName = "PicPacPoe-tvOSTests"
+               ReferencedContainer = "container:PicPacPoe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "TTT^2-tvOSTests.xctest"
-               BlueprintName = "TTT^2-tvOSTests"
-               ReferencedContainer = "container:TTT^2.xcodeproj">
+               BuildableName = "PicPacPoe-tvOSTests.xctest"
+               BlueprintName = "PicPacPoe-tvOSTests"
+               ReferencedContainer = "container:PicPacPoe.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "TTT^2-tvOS.app"
-            BlueprintName = "TTT^2-tvOS"
-            ReferencedContainer = "container:TTT^2.xcodeproj">
+            BuildableName = "PicPacPoe-tvOS.app"
+            BlueprintName = "PicPacPoe-tvOS"
+            ReferencedContainer = "container:PicPacPoe.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "TTT^2-tvOS.app"
-            BlueprintName = "TTT^2-tvOS"
-            ReferencedContainer = "container:TTT^2.xcodeproj">
+            BuildableName = "PicPacPoe-tvOS.app"
+            BlueprintName = "PicPacPoe-tvOS"
+            ReferencedContainer = "container:PicPacPoe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "TTT^2-tvOS.app"
-            BlueprintName = "TTT^2-tvOS"
-            ReferencedContainer = "container:TTT^2.xcodeproj">
+            BuildableName = "PicPacPoe-tvOS.app"
+            BlueprintName = "PicPacPoe-tvOS"
+            ReferencedContainer = "container:PicPacPoe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

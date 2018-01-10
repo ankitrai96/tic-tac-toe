@@ -16,11 +16,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React Native!"
 
-@interface TTT^2Tests : XCTestCase
+@interface PicPacPoeTests : XCTestCase
 
 @end
 
-@implementation TTT^2Tests
+@implementation PicPacPoeTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {
