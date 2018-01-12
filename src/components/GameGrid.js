@@ -9,26 +9,23 @@ export default class GameGrid extends Component {
         cellValue : ['','','','','','','','','']
     }
     componentDidUpdate(){
-        let flag = false
         if(this.state.winner==''){
-            this.gameOver('X')
-            this.gameOver('O')
+            if(this.gameOver(this.state.cellValue,'X')) this.gameWon('X')
+            else if(this.gameOver(this.state.cellValue,'O')) this.gameWon('O')
         }
         if(!this.state.cellValue.includes('')){
             alert("DRAW")
             this.setState({cellValue: ['','','','','','','','','']})
         }
-    }
-    updateCellValue(indexOfArray){
-        tempArray = []
-        for(let i = 0; i<this.state.cellValue.length; i++){
-            if(i==indexOfArray){
-                tempArray[i] = this.state.token
-            } else {
-                tempArray[i] = this.state.cellValue[i];
-            }
+        if(this.state.token=='X'){
+            // invoke artificial intelligence
+            this.ghostAI()
         }
-        return tempArray
+    }
+    render(){       
+        return (
+            <View style={styles.container}>{this.board()}</View>
+        )
     }
     swapToken(){
         if(this.state.token=='O'){
@@ -36,6 +33,12 @@ export default class GameGrid extends Component {
         } else {
             return 'O'
         }
+    }
+    gameWon(winner){
+        this.setState({winner: winner})
+        setTimeout(() => {
+            this.setState({cellValue: ['','','','','','','','',''], winner:''})
+        }, 3000);
     }
     turnPlayed(cellId){
         // interface is handled here
@@ -47,31 +50,24 @@ export default class GameGrid extends Component {
             alert("Wrong Move! Try again.")
         }
     }
-    gameWon(winner){
-        this.setState({winner: winner})
-        setTimeout(() => {
-            this.setState({cellValue: ['','','','','','','','',''], winner:''})
-        }, 3000);
+    minimaxAlgo(boardState, player){
+        let catalogue = [] // consequence(s) of possible variations
+        
     }
-    //To-Do: Shrinkify the gameOver if-else ladder
-    gameOver(forToken) {
-        if(this.state.cellValue[0]==forToken && this.state.cellValue[1]==forToken && this.state.cellValue[2]==forToken){
-            this.gameWon(forToken)
-        } else if(this.state.cellValue[3]==forToken && this.state.cellValue[4]==forToken && this.state.cellValue[5]==forToken){
-            this.gameWon(forToken)
-        } else if(this.state.cellValue[6]==forToken && this.state.cellValue[7]==forToken && this.state.cellValue[8]==forToken){
-            this.gameWon(forToken)
-        } else if(this.state.cellValue[0]==forToken && this.state.cellValue[3]==forToken && this.state.cellValue[6]==forToken){
-            this.gameWon(forToken)
-        } else if(this.state.cellValue[1]==forToken && this.state.cellValue[4]==forToken && this.state.cellValue[7]==forToken){
-            this.gameWon(forToken)
-        } else if(this.state.cellValue[2]==forToken && this.state.cellValue[5]==forToken && this.state.cellValue[8]==forToken){
-            this.gameWon(forToken)
-        } else if(this.state.cellValue[0]==forToken && this.state.cellValue[4]==forToken && this.state.cellValue[8]==forToken){
-            this.gameWon(forToken)
-        } else if(this.state.cellValue[2]==forToken && this.state.cellValue[4]==forToken && this.state.cellValue[6]==forToken){
-            this.gameWon(forToken)
+    ghostAI(){
+        // plays on behalf of X token based on minimaxAlgo
+        
+    }
+    updateCellValue(indexOfArray){
+        tempArray = []
+        for(let i = 0; i<this.state.cellValue.length; i++){
+            if(i==indexOfArray){
+                tempArray[i] = this.state.token
+            } else {
+                tempArray[i] = this.state.cellValue[i];
+            }
         }
+        return tempArray
     }
     board(){
         if(this.state.winner==''){
@@ -152,10 +148,25 @@ export default class GameGrid extends Component {
             }
         }
     }
-    render(){       
-        return (
-            <View style={styles.container}>{this.board()}</View>
-        )
+    //To-Do: Shrinkify the gameOver if-else ladder
+    gameOver(evalBoard, forToken) {
+        if(evalBoard[0]==forToken && evalBoard[1]==forToken && evalBoard[2]==forToken){
+            return true
+        } else if(evalBoard[3]==forToken && evalBoard[4]==forToken && evalBoard[5]==forToken){
+            return true
+        } else if(evalBoard[6]==forToken && evalBoard[7]==forToken && evalBoard[8]==forToken){
+            return true
+        } else if(evalBoard[0]==forToken && evalBoard[3]==forToken && evalBoard[6]==forToken){
+            return true
+        } else if(evalBoard[1]==forToken && evalBoard[4]==forToken && evalBoard[7]==forToken){
+            return true
+        } else if(evalBoard[2]==forToken && evalBoard[5]==forToken && evalBoard[8]==forToken){
+            return true
+        } else if(evalBoard[0]==forToken && evalBoard[4]==forToken && evalBoard[8]==forToken){
+            return true
+        } else if(evalBoard[2]==forToken && evalBoard[4]==forToken && evalBoard[6]==forToken){
+            return true
+        }
     }
     
 }
