@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, Image} from 'react-native';
-import {GameOver, MinimaxAlgo} from '../GameEngine'
+import {GameOver, MinimaxAlgo, VacantCell} from '../GameEngine'
 import Cell from './Cell';
 
 export default class GameGrid extends Component {
@@ -10,13 +10,19 @@ export default class GameGrid extends Component {
         cellValue : Array.from(Array(9).keys())
     }
     componentDidUpdate(){
+        if(GameOver(this.state.cellValue,'X')) this.gameWon('X')
+        else if(GameOver(this.state.cellValue,'O')) this.gameWon('O')
         if(this.state.winner==''){
-            if(GameOver(this.state.cellValue,'X')) this.gameWon('X')
-            else if(GameOver(this.state.cellValue,'O')) this.gameWon('O')
-        }
-        if(this.state.token=='X'){
-            // invoke artificial intelligence
-            this.turnPlayed(MinimaxAlgo(this.state.cellValue,'X').index)
+            if(VacantCell(this.state.cellValue).length==0) this.gameWon()
+            if(this.state.token=='X' && this.props.ghost){
+                // invoke artificial intelligence
+                if(this.props.difficulty){
+                    this.turnPlayed(MinimaxAlgo(this.state.cellValue,'X').index)   
+                } else {
+                    let chance = VacantCell(this.state.cellValue)
+                    this.turnPlayed(chance[Math.floor(Math.random()*chance.length)])
+                }
+            }
         }
     }
     render(){       
@@ -31,8 +37,7 @@ export default class GameGrid extends Component {
                 token: this.state.token == 'O' ? 'X' : 'O'
             })
         } else if(cellId == -1){
-            alert("Draw. Beat me if you can!")
-            this.setState({cellValue: Array.from(Array(9).keys())})
+            this.gameWon()
         } else {
             //scope of a fancy modal here
             alert("Wrong Move! Try Again.")
@@ -49,11 +54,12 @@ export default class GameGrid extends Component {
         }
         return tempArray
     }
-    gameWon(winner){
-        this.setState({winner: winner})
+    gameWon(winner = ''){
+        if(winner!='') this.setState({winner: winner})
+        else alert("DRAW")
         setTimeout(() => {
             this.setState({cellValue: Array.from(Array(9).keys()), winner:''})
-        }, 3000)
+        }, 2250)
     }
     board(){
         if(this.state.winner==''){
@@ -138,9 +144,9 @@ export default class GameGrid extends Component {
 
 const styles = {
     container: {
-        height: 280,
-        width: 280,
-        backgroundColor: '#fffce8'
+        height: 265,
+        width: 265,
+        backgroundColor: '#F3DE2C'
     },
     row:{
         flexDirection: 'row',

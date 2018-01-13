@@ -49,7 +49,7 @@ export const GameOver = (evalBoard, forToken) => {
         ) return true
         else return false
 }
-const VacantCell = (b) => {
+export const VacantCell = (b) => {
     let l = []
     for(let c =0 ; c < b.length ; c++){
         if(!isNaN(b[c])) l.push(c)
