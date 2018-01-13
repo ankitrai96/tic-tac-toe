@@ -6,20 +6,17 @@ export default class GameGrid extends Component {
     state = {
         token:'O',
         winner: '',
-        cellValue : ['','','','','','','','','']
+        cellValue : Array.from(Array(9).keys())
     }
     componentDidUpdate(){
         if(this.state.winner==''){
-            if(this.gameOver(this.state.cellValue,'X')) this.gameWon('X')
-            else if(this.gameOver(this.state.cellValue,'O')) this.gameWon('O')
-        }
-        if(!this.state.cellValue.includes('')){
-            alert("DRAW")
-            this.setState({cellValue: ['','','','','','','','','']})
+            if(gameOver(this.state.cellValue,'X')) this.gameWon('X')
+            else if(gameOver(this.state.cellValue,'O')) this.gameWon('O')
         }
         if(this.state.token=='X'){
             // invoke artificial intelligence
-            this.ghostAI()
+            //alert(minimaxAlgo(this.state.cellValue,'X').index)
+            this.turnPlayed(minimaxAlgo(this.state.cellValue,'X').index)
         }
     }
     render(){       
@@ -37,26 +34,22 @@ export default class GameGrid extends Component {
     gameWon(winner){
         this.setState({winner: winner})
         setTimeout(() => {
-            this.setState({cellValue: ['','','','','','','','',''], winner:''})
-        }, 3000);
+            this.setState({cellValue: Array.from(Array(9).keys()), winner:''})
+        }, 3000)
     }
     turnPlayed(cellId){
         // interface is handled here
-        if(this.state.cellValue[cellId]==''){
-            this.setState({cellValue: this.updateCellValue(cellId), token: this.swapToken()})
-            // this.setState({})
+        if(!isNaN(this.state.cellValue[cellId])){
+                this.setState({cellValue: this.updateCellValue(cellId),
+                token: this.swapToken()
+            })
+        } else if(cellId == -1){
+            alert("Draw! Beat me if you can")
+            this.setState({cellValue: Array.from(Array(9).keys())})
         } else {
             //scope of a fancy modal here
-            alert("Wrong Move! Try again.")
+            alert("Wrong Move! Try Again.")
         }
-    }
-    minimaxAlgo(boardState, player){
-        let catalogue = [] // consequence(s) of possible variations
-        
-    }
-    ghostAI(){
-        // plays on behalf of X token based on minimaxAlgo
-        
     }
     updateCellValue(indexOfArray){
         tempArray = []
@@ -147,28 +140,68 @@ export default class GameGrid extends Component {
                 )
             }
         }
+    }    
+}
+
+const gameOver = (evalBoard, forToken) => {
+    if (
+        (evalBoard[0] == forToken  && evalBoard[1] == forToken  && evalBoard[2] == forToken ) ||
+        (evalBoard[3] == forToken  && evalBoard[4] == forToken  && evalBoard[5] == forToken ) ||
+        (evalBoard[6] == forToken  && evalBoard[7] == forToken  && evalBoard[8] == forToken ) ||
+        (evalBoard[0] == forToken  && evalBoard[3] == forToken  && evalBoard[6] == forToken ) ||
+        (evalBoard[1] == forToken  && evalBoard[4] == forToken  && evalBoard[7] == forToken ) ||
+        (evalBoard[2] == forToken  && evalBoard[5] == forToken  && evalBoard[8] == forToken ) ||
+        (evalBoard[0] == forToken  && evalBoard[4] == forToken  && evalBoard[8] == forToken ) ||
+        (evalBoard[2] == forToken  && evalBoard[4] == forToken  && evalBoard[6] == forToken )
+        ) return true
+        else return false
+}
+
+const vacantCell = (b) => {
+    let l = []
+    for(let c =0 ; c < b.length ; c++){
+        if(!isNaN(b[c])) l.push(c)
     }
-    //To-Do: Shrinkify the gameOver if-else ladder
-    gameOver(evalBoard, forToken) {
-        if(evalBoard[0]==forToken && evalBoard[1]==forToken && evalBoard[2]==forToken){
-            return true
-        } else if(evalBoard[3]==forToken && evalBoard[4]==forToken && evalBoard[5]==forToken){
-            return true
-        } else if(evalBoard[6]==forToken && evalBoard[7]==forToken && evalBoard[8]==forToken){
-            return true
-        } else if(evalBoard[0]==forToken && evalBoard[3]==forToken && evalBoard[6]==forToken){
-            return true
-        } else if(evalBoard[1]==forToken && evalBoard[4]==forToken && evalBoard[7]==forToken){
-            return true
-        } else if(evalBoard[2]==forToken && evalBoard[5]==forToken && evalBoard[8]==forToken){
-            return true
-        } else if(evalBoard[0]==forToken && evalBoard[4]==forToken && evalBoard[8]==forToken){
-            return true
-        } else if(evalBoard[2]==forToken && evalBoard[4]==forToken && evalBoard[6]==forToken){
-            return true
+    return l
+}
+
+const minimaxAlgo = (boardState, player) => {
+    const availSpots = vacantCell(boardState)
+    const moves = []
+    let bestMove
+    if (gameOver(boardState, 'O')) {
+        return {score: -10}
+    } else if (gameOver(boardState, 'X')) {
+        return {score: 10}
+    } else if (availSpots.length === 0) {
+        return {score: 0, index: -1}
+    }
+    for (const i = 0; i < availSpots.length; i++) {
+        const move = {}
+        move.index = boardState[availSpots[i]]
+        boardState[availSpots[i]] = player
+        move.score = (player=='X') ? minimaxAlgo(boardState,'O').score : minimaxAlgo(boardState,'X').score 
+        boardState[availSpots[i]] = move.index
+        moves.push(move)
+    }
+    if(player == 'X') {
+        let bestScore = -10000
+        for(let i = 0; i < moves.length; i++) {
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score
+                bestMove = i
+            }
         }
-    }
-    
+    } else {
+            let bestScore = 10000
+            for(let i = 0; i < moves.length; i++) {
+                if (moves[i].score < bestScore) {
+                    bestScore = moves[i].score
+                    bestMove = i
+                }
+            }
+        }
+    return moves[bestMove]
 }
 
 const styles = {
