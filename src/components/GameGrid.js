@@ -11,6 +11,7 @@ export default class GameGrid extends Component {
         cellValue : [0,1,2,3,4,5,6,7,8]
     }
     componentDidUpdate(){
+        if(this.props.ghost!=this.state.refresh) this.gameWon()
         if(this.state.winner==''){
             let chance = VacantCell(this.state.cellValue)
             if(GameOver(this.state.cellValue,'X')) this.gameWon('X')
@@ -60,8 +61,9 @@ export default class GameGrid extends Component {
         if(winner) this.setState({winner: winner})
         else alert("DRAW")
         setTimeout(() => {
-            this.setState({cellValue: [0,1,2,3,4,5,6,7,8], winner:''})
-        }, 2250)
+            this.setState({cellValue: [0,1,2,3,4,5,6,7,8], 
+                winner:'', refresh: this.props.ghost
+        })}, 1750)
     }
     board(){
         if(this.state.winner==''){
@@ -147,8 +149,7 @@ export default class GameGrid extends Component {
 const styles = {
     container: {
         height: 265,
-        width: 265,
-        backgroundColor: '#F3DE2C'
+        width: 265
     },
     row:{
         flexDirection: 'row',

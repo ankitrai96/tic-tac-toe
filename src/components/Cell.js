@@ -29,7 +29,7 @@ const Cell = ({token, boardTap, cellIdentity}) => {
 }
 const styles = {
     wrapper: {
-        backgroundColor : '#FBB02D',
+        backgroundColor : '#FB6107',
         alignItems : 'center',
         justifyContent: 'center',
         flex:1
