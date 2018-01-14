@@ -7,19 +7,21 @@ export default class GameGrid extends Component {
     state = {
         token:'O',
         winner: '',
-        cellValue : Array.from(Array(9).keys())
+        refresh: this.props.ghost,
+        cellValue : [0,1,2,3,4,5,6,7,8]
     }
     componentDidUpdate(){
-        if(GameOver(this.state.cellValue,'X')) this.gameWon('X')
-        else if(GameOver(this.state.cellValue,'O')) this.gameWon('O')
         if(this.state.winner==''){
-            if(VacantCell(this.state.cellValue).length==0) this.gameWon()
+            let chance = VacantCell(this.state.cellValue)
+            if(GameOver(this.state.cellValue,'X')) this.gameWon('X')
+            else if(GameOver(this.state.cellValue,'O')) this.gameWon('O')
+            else if(chance.length==0) this.gameWon()
+            
             if(this.state.token=='X' && this.props.ghost){
                 // invoke artificial intelligence
                 if(this.props.difficulty){
                     this.turnPlayed(MinimaxAlgo(this.state.cellValue,'X').index)   
-                } else {
-                    let chance = VacantCell(this.state.cellValue)
+                } else if(chance.length!=0){
                     this.turnPlayed(chance[Math.floor(Math.random()*chance.length)])
                 }
             }
@@ -54,11 +56,11 @@ export default class GameGrid extends Component {
         }
         return tempArray
     }
-    gameWon(winner = ''){
-        if(winner!='') this.setState({winner: winner})
+    gameWon(winner){
+        if(winner) this.setState({winner: winner})
         else alert("DRAW")
         setTimeout(() => {
-            this.setState({cellValue: Array.from(Array(9).keys()), winner:''})
+            this.setState({cellValue: [0,1,2,3,4,5,6,7,8], winner:''})
         }, 2250)
     }
     board(){
