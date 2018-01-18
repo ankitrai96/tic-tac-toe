@@ -1,4 +1,4 @@
-package com.myfriend;
+package com.picpacpoe;
 
 import com.facebook.react.ReactActivity;
 

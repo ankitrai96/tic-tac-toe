@@ -1,4 +1,4 @@
-package com.myfriend;
+package com.picpacpoe;
 
 import android.app.Application;
 
