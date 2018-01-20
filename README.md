@@ -1,6 +1,7 @@
 # PicPacPoe
-a manifestation of Minimax algorithm over a classic tic-tac-toe game
 ![app Icon](https://github.com/ankitrai96/tic-tac-toe/blob/master/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png)
+
+a manifestation of Minimax algorithm over a classic tic-tac-toe game
 
 ### Modules
 this project has and is developed in three modules as follow:
