@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, Text} from 'react-native';
 import {GameOver, MinimaxAlgo, VacantCell} from '../GameEngine'
 import Cell from './Cell';
 
@@ -11,17 +11,17 @@ export default class GameGrid extends Component {
         cellValue : [0,1,2,3,4,5,6,7,8]
     }
     componentDidUpdate(){
-        if(this.props.ghost!=this.state.refresh) this.gameWon()
-        if(this.state.winner==''){
-            let chance = VacantCell(this.state.cellValue)
-            if(GameOver(this.state.cellValue,'X')) this.gameWon('X')
-            else if(GameOver(this.state.cellValue,'O')) this.gameWon('O')
-            else if(chance.length==0) this.gameWon()
-            
-            if(this.state.token=='X' && this.props.ghost){
+        const {refresh, cellValue, winner, token} = this.state;
+        const chance = VacantCell(cellValue)
+        if(this.props.ghost!=refresh) this.gameWon()
+        if(winner==''){
+            if(GameOver(cellValue,'X')) this.gameWon('X')
+            else if(GameOver(cellValue,'O')) this.gameWon('O')
+            else if(chance.length==0) this.gameWon('d')    
+            if(token=='X' && this.props.ghost){
                 // invoke artificial intelligence
-                if(this.props.difficulty){
-                    this.turnPlayed(MinimaxAlgo(this.state.cellValue,'X').index)   
+                if(this.props.difficulty && chance.length!=0){
+                    this.turnPlayed(MinimaxAlgo(cellValue,'X').index)   
                 } else if(chance.length!=0){
                     this.turnPlayed(chance[Math.floor(Math.random()*chance.length)])
                 }
@@ -39,8 +39,6 @@ export default class GameGrid extends Component {
                 this.setState({cellValue: this.updateCellValue(cellId),
                 token: this.state.token == 'O' ? 'X' : 'O'
             })
-        } else if(cellId == -1){
-            this.gameWon()
         } else {
             //scope of a fancy modal here
             alert("Wrong Move! Try Again.")
@@ -59,11 +57,10 @@ export default class GameGrid extends Component {
     }
     gameWon(winner){
         if(winner) this.setState({winner: winner})
-        else alert("DRAW")
         setTimeout(() => {
             this.setState({cellValue: [0,1,2,3,4,5,6,7,8], 
                 winner:'', refresh: this.props.ghost
-        })}, 1750)
+        })}, 500)
     }
     board(){
         if(this.state.winner==''){
@@ -122,8 +119,7 @@ export default class GameGrid extends Component {
                     </View>
                 </View>
             )
-        } else {
-            if(this.state.winner=='O'){
+        } else if(this.state.winner=='O'){
                 return (
                     <View style={{justifyContent:'center',alignItems:'center'}}>
                         <Image 
@@ -141,8 +137,9 @@ export default class GameGrid extends Component {
                         />
                     </View>
                 )
+            } else {
+                return <Text style={styles.draw}>Draw</Text>
             }
-        }
     }    
 }
 
@@ -158,5 +155,11 @@ const styles = {
     unit: {
         padding: 2,
         flex:1
+    },
+    draw: {
+        fontWeight: 'bold',
+        fontSize: 25,
+        color: '#474747',
+        alignSelf: 'center'
     }
 }
